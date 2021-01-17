@@ -82,14 +82,14 @@ class Line:
 
     
     def is_vertical(self):
-        if(self.p.y==self.q.y):
+        if(self.p.x==self.q.x):
             return True
         return False
         
     def slope(self):
         if(self.p.x-self.q.x==0):
             return None
-        return round((self.p.y-self.q.y)/(self.p.x-self.q.x),2)
+        return (self.p.y-self.q.y)/(self.p.x-self.q.x)
         
     def y_intersect(self):
         m=self.slope()
@@ -103,7 +103,7 @@ class Line:
         n=self.y_intersect()
         if(m!=None):
             return "y = {0:.2f}x + {1:.2f}".format(m,n)
-        return "x={0:.2f}".format(self.p.x)
+        return "x = {0:.2f}".format(self.p.x)
 
     def parallel(self,other):
         if(self.slope()==other.slope()):
@@ -111,51 +111,103 @@ class Line:
         return False
     
     def equals(self,other):
-        if(str(self)==str(other)):
+        if(other.slope()==self.slope() and self.y_intersect()==other.y_intersect()):
             return True
         return False
     
     def intersection(self,other):
         if(self.parallel(other)):
             return None
+        
         myY=self.y_intersect()
         otherY=other.y_intersect()
-        freeNum=otherY-myY
         mySlope=self.slope()
         otherSlope=other.slope()
-        xFactor=mySlope-otherSlope
-        xValue=round(freeNum/xFactor,2)
-        yValue=xValue*mySlope+myY
+        if(myY and otherY):
+            freeNum=otherY-myY
+            xFactor=mySlope-otherSlope
+            xValue=freeNum/xFactor
+            yValue=xValue*mySlope+myY
+        elif(self.is_vertical()):
+            xValue=self.p.x
+            yValue=xValue*otherSlope+otherY
+        else:
+            xValue=other.p.x
+            yValue=xValue*mySlope+myY
         return Point(xValue,yValue)
+            
         
         
 
-def ui(filename):
-    f=open(filename, "r")
+def ui(filenum):
+    f=open(f"input{filenum}.txt", "r")
     content=""
     rowNum=1
+    linesArr=[]
     #iterates throght every line in the text file to calculate the factorization options
     for row in f:
         try:
+            row=row.strip()
             arr=row.split(" ")
-            content+=f"line {rowNum}"
             if(len(arr)==4):
+                #content+=f"line {rowNum}"
                 line=Line( Point(arr[0],arr[1]),Point(arr[2],arr[3]) )
-                content+=f": {str(line)}\n"
+                content+=f"line {rowNum}: {str(line)}\n"
+                for l in linesArr:
+                   intersection=line.intersection(l["line"])
+                   otherLineNum=l["lineNum"]
+                   content+=f"line {rowNum} "
+                   if(intersection):
+                       content+=f"with line {otherLineNum}: {intersection}\n"
+                   elif( line.equals(l["line"]) ):
+                       content+=f"is equal to line {otherLineNum}\n"
+                   else:
+                      content+=f"is parallel to line {otherLineNum}\n"
+                      
+                lineDic={"lineNum":rowNum,"line":line}
+                linesArr.append(lineDic)
+                
             else:
-                raise Exception("Every line must include 4 numbers")
-            rowNum+=1
+                raise Exception(f"Not enough data for line {rowNum}.")
         except ValueError as e:
-            content+=f" error: {e}\n"
+            content+=f"Line {rowNum} error: {e}\n"
         except Exception as e:
-            content+=f" error: {e}\n"
+            content+=f"{e}\n"
+        content+="\n"
+        rowNum+=1
     f.close()
-    print(content)
+    
+    o = open(f"output{filenum}.txt", "w")
+    o.write(content)
+    o.close()
+    
+    tester(filenum)
 
+def tester(filenum):
+    correct=open(f"output{filenum}_correct.txt", "r")
+    mine=open(f"output{filenum}.txt", "r")
+    rowNum=1
+    ok="OK"
+    for row in correct:
+        validRow= row == mine.readline()
+        if(validRow==False):
+            print(f"row {rowNum} does not match")
+            ok="Err"
+            return
+        rowNum+=1
+    
+    print(ok)
+        
+    
     
 def main():
-    ui("input1.txt")
-    ui("input4.txt")
+    ui(1)
+    ui(2)
+    ui(3)
+    ui(4)
+    ui(5)
+    ui(6)
+    
 
 main()
 

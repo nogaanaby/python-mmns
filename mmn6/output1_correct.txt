@@ -18,7 +18,12 @@ line 5 with line 2: (5.00,0.92)
 line 5 with line 3: (5.00,2.25)
 line 5 with line 4: (5.00,3.00)
 
-Line 6 error: y coordinate must be a number
+line 6: y = -1.07x + 4.00
+line 6 with line 1: (-28.00,34.00)
+line 6 with line 2: (3.76,-0.03)
+line 6 with line 3: (1.88,1.99)
+line 6 with line 4: (-56.00,64.00)
+line 6 with line 5: (5.00,-1.36)
 
 line 7: y = 0.67x + -3.67
 line 7 with line 1: (5.80,0.20)
@@ -26,6 +31,7 @@ line 7 with line 2: (-7.08,-8.39)
 line 7 with line 3: (9.43,2.62)
 line 7 with line 4: (7.00,1.00)
 line 7 with line 5: (5.00,-0.33)
+line 7 with line 6: (4.41,-0.73)
 
 line 8: y = 0.67x + 3.00
 line 8 with line 1: (1.80,4.20)
@@ -33,5 +39,6 @@ line 8 with line 2: (57.25,41.16)
 line 8 with line 3: (-2.00,1.67)
 line 8 with line 4: (3.00,5.00)
 line 8 with line 5: (5.00,6.33)
+line 8 with line 6: (0.58,3.38)
 line 8 is parallel to line 7
 
