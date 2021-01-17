@@ -1,8 +1,11 @@
 # -*- coding: utf-8 -*-
 """
-Created on Wed Jan 13 18:55:30 2021
+Student: Noga Anaby
+ID: 318298296
+Assignment no. 6
+Program: line.py
 
-@author: User
+This program is a linear functions calculator
 """
 class Point:
     """ a point in the plane """
@@ -82,16 +85,19 @@ class Line:
 
     
     def is_vertical(self):
+        """ returns true if the line is verical and false otherwize """
         if(self.p.x==self.q.x):
             return True
         return False
         
     def slope(self):
+        """ returns the line slope """
         if(self.p.x-self.q.x==0):
             return None
         return (self.p.y-self.q.y)/(self.p.x-self.q.x)
         
     def y_intersect(self):
+        """ returns the line y intersection """
         m=self.slope()
         if(m!=None):
             n=self.p.y-(m*self.p.x)
@@ -99,6 +105,7 @@ class Line:
         return None
         
     def __str__(self):
+        """ returns the line equivelent as string """
         m=self.slope()
         n=self.y_intersect()
         if(m!=None):
@@ -106,16 +113,19 @@ class Line:
         return "x = {0:.2f}".format(self.p.x)
 
     def parallel(self,other):
+        """ returns true if this line is parallel to the line given in the parameter and false otherwize """
         if(self.slope()==other.slope()):
             return True
         return False
     
     def equals(self,other):
+        """ returns true if this line is equal to the line given in the parameter and false otherwize """
         if(other.slope()==self.slope() and self.y_intersect()==other.y_intersect()):
             return True
         return False
     
     def intersection(self,other):
+        """ returns the intersection point between this line and the line given in the parameter"""        
         if(self.parallel(other)):
             return None
         
@@ -140,19 +150,20 @@ class Line:
         
 
 def ui(filenum):
+    """this function"""
     f=open(f"input{filenum}.txt", "r")
     content=""
     rowNum=1
     linesArr=[]
-    #iterates throght every line in the text file to calculate the factorization options
+    #iterates throght every row in the text file
     for row in f:
         try:
             row=row.strip()
             arr=row.split(" ")
             if(len(arr)==4):
-                #content+=f"line {rowNum}"
                 line=Line( Point(arr[0],arr[1]),Point(arr[2],arr[3]) )
                 content+=f"line {rowNum}: {str(line)}\n"
+                #iterates throght every line that where calculated before this row
                 for l in linesArr:
                    intersection=line.intersection(l["line"])
                    otherLineNum=l["lineNum"]
