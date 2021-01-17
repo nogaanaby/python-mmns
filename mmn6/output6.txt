@@ -1,0 +1,14 @@
+line 1: y = -1.00x + 6.00
+
+line 2: y = -1.00x + 7.00
+line 2 is parallel to line 1
+
+line 3: y = -1.00x + 8.00
+line 3 is parallel to line 1
+line 3 is parallel to line 2
+
+line 4: y = -1.00x + 9.00
+line 4 is parallel to line 1
+line 4 is parallel to line 2
+line 4 is parallel to line 3
+
