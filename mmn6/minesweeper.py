@@ -178,12 +178,10 @@ class MSBoard:
             return count_exposed_squares
         elif(self.board_data[x][y].neighbor_mines!=0):
             self.board_data[x][y].hidden=False
-            self.print_board()
             count_exposed_squares+=1
             return count_exposed_squares
         else:
             self.board_data[x][y].hidden=False
-            self.print_board()
             count_exposed_squares+=1
             count_exposed_squares+=self.expose_zeroes(x+1,y)
             count_exposed_squares+=self.expose_zeroes(x+1,y-1)
@@ -227,7 +225,6 @@ def main():
        
        count_exposed_squares+=board.expose_square(row,col)
        board.print_board()
-       print(count_exposed_squares)
        
        if(board.board_data[row][col].has_mine):
            print("you lost")

@@ -147,11 +147,8 @@ class Line:
         return Point(xValue,yValue)
             
         
-        
-
-def ui(filenum):
-    """this function"""
-    f=open(f"input{filenum}.txt", "r")
+def main():
+    f=open("input.txt", "r")
     content=""
     rowNum=1
     linesArr=[]
@@ -188,36 +185,9 @@ def ui(filenum):
         rowNum+=1
     f.close()
     
-    o = open(f"output{filenum}.txt", "w")
+    o = open("output.txt", "w")
     o.write(content)
     o.close()
-    
-    tester(filenum)
-
-def tester(filenum):
-    correct=open(f"output{filenum}_correct.txt", "r")
-    mine=open(f"output{filenum}.txt", "r")
-    rowNum=1
-    ok="OK"
-    for row in correct:
-        validRow= row == mine.readline()
-        if(validRow==False):
-            print(f"row {rowNum} does not match")
-            ok="Err"
-            return
-        rowNum+=1
-    
-    print(ok)
-        
-    
-    
-def main():
-    ui(1)
-    ui(2)
-    ui(3)
-    ui(4)
-    ui(5)
-    ui(6)
     
 
 main()
