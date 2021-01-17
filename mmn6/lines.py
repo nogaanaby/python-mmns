@@ -104,17 +104,45 @@ class Line:
         if(m!=None):
             return "y={0:.2f}x+{1:.2f}".format(m,n)
         return "x={0:.2f}".format(self.p.x)
+
+    def parallel(self,other):
+        if(self.slope()==other.slope()):
+            return True
+        return False
+    
+    def equals(self,other):
+        if(str(self)==str(other)):
+            return True
+        return False
+    
+    def intersection(self,other):
+        if(self.parallel(other)):
+            return None
+        myY=self.y_intersect()
+        otherY=other.y_intersect()
+        freeNum=otherY-myY
+        mySlope=self.slope()
+        otherSlope=other.slope()
+        xFactor=mySlope-otherSlope
+        xValue=round(freeNum/xFactor,2)
+        yValue=xValue*mySlope+myY
+        return Point(xValue,yValue)
+        
+        
         
 def main():
     try:
-        p = Point(4.76543,7)
+        p = Point(1,30)
         print(p)
-        q = Point(8,7.53333)
+        q = Point(12,9)
         l=Line(p,q)
+        l2=Line(Point(8,4.67),Point(5,9))
         print(l)
-        #print(l.y_intersect())
+        print(l2)
+        print(l.equals(l2))
+        print(l.intersection(l2))
     except Exception as e:
-        print(e)    
+        print(e)
     
 
 main()
