@@ -4,17 +4,17 @@ Created on Wed Jan 13 18:55:30 2021
 
 @author: User
 """
-import math
-import copy
-
 class Point:
     """ a point in the plane """
     def __init__(self, x, y):
         try:
-            self.__x = float(x)
-            self.__y = float(y)
-        except ValueError as e:
-            print(e)    
+            self.__x = float(x)       
+        except ValueError:
+            raise ValueError("x coordinate must be a number")
+        try:
+            self.__y = float(y)       
+        except ValueError:
+            raise ValueError("y coordinate must be a number")
 
     def __str__(self):
         return "({0:.2f},{1:.2f})".format(self.x,self.y)
@@ -102,7 +102,7 @@ class Line:
         m=self.slope()
         n=self.y_intersect()
         if(m!=None):
-            return "y={0:.2f}x+{1:.2f}".format(m,n)
+            return "y = {0:.2f}x + {1:.2f}".format(m,n)
         return "x={0:.2f}".format(self.p.x)
 
     def parallel(self,other):
@@ -129,53 +129,39 @@ class Line:
         return Point(xValue,yValue)
         
         
-        
-def main():
-    try:
-        p = Point(1,30)
-        print(p)
-        q = Point(12,9)
-        l=Line(p,q)
-        l2=Line(Point(8,4.67),Point(5,9))
-        print(l)
-        print(l2)
-        print(l.equals(l2))
-        print(l.intersection(l2))
-    except Exception as e:
-        print(e)
+
+def ui(filename):
+    f=open(filename, "r")
+    content=""
+    rowNum=1
+    #iterates throght every line in the text file to calculate the factorization options
+    for row in f:
+        try:
+            arr=row.split(" ")
+            content+=f"line {rowNum}"
+            if(len(arr)==4):
+                line=Line( Point(arr[0],arr[1]),Point(arr[2],arr[3]) )
+                content+=f": {str(line)}\n"
+            else:
+                raise Exception("Every line must include 4 numbers")
+            rowNum+=1
+        except ValueError as e:
+            content+=f" error: {e}\n"
+        except Exception as e:
+            content+=f" error: {e}\n"
+    f.close()
+    print(content)
+
     
+def main():
+    ui("input1.txt")
+    ui("input4.txt")
 
 main()
 
-
-"""
-def get_inverse_element(lst, index):
-
-    try:
-        return 1/int(lst[index])
-    except ValueError:
-        print("value is not a number")
-    except IndexError:
-        print("index is not in the list")
-    except ZeroDivisionError:
-        print("zero has no inverse")
-        
-strange_list = ['seventeen', '17', '0', 'hello']
-print(get_inverse_element(strange_list,0))
-print(get_inverse_element(strange_list,2))
-print(get_inverse_element(strange_list,4))
-print(get_inverse_element(strange_list,1))
-"""
-
-
-
-    
-"""    
-    def __init__(self, p, q):
-        if(isinstance(p, Point)==False or isinstance(q, Point)==False):
-            raise ValueError('The arguments type must be Points')
-        if(p==q):
-           raise Exception('Please enter two different points')         
-        self.__p = copy.deepcopy(p)
-        self.__q = copy.deepcopy(q)
-"""
+'''
+piece and love, best regards,
+Served under the auspices of 
+Noga Banana first of her name
+mother of cats and breaker of chains
+'''
